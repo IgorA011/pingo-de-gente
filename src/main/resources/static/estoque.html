@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Estoque - Loja Infantil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+        <div class="d-flex justify-content-between w-100 align-items-center">
+            <span class="navbar-text fw-bold">
+                <img src="img/pingo.png 1.png" alt="Logo Loja Infantil" style="height: 200px; max-width: 100%; margin: 0 auto;">
+            </span>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <h2 class="mb-4">Controle de Estoque</h2>
+
+    <div id="accessDenied" class="alert alert-danger" style="display: none;">
+        <p>Acesso restrito para estoquistas e administradores.</p>
+        <button class="btn btn-primary btn-sm" onclick="window.location.href='login.html'">
+            Fazer Login
+        </button>
+    </div>
+
+    <div id="estoqueContent" style="display: none;">
+        <!-- Seção de Busca e Filtros -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Buscar e Filtrar Produtos</h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-search"></i>
+                            </span>
+                            <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nome do produto...">
+                            <button class="btn btn-outline-secondary" type="button" onclick="clearSearch()">
+                                <i class="bi bi-x"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <select id="categoryFilter" class="form-select">
+                            <option value="">Todas as categorias</option>
+                            <!-- Categorias serão carregadas dinamicamente -->
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select id="stockFilter" class="form-select">
+                            <option value="all">Todos os estoques</option>
+                            <option value="low">Estoque baixo (≤ 5)</option>
+                            <option value="out">Fora de estoque</option>
+                            <option value="normal">Estoque normal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="sortAsc" checked>
+                            <label class="form-check-label" for="sortAsc">
+                                Ordenar A-Z
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="showLowStockFirst">
+                            <label class="form-check-label" for="showLowStockFirst">
+                                Priorizar estoque baixo
+                            </label>
+                        </div>
+                        <button class="btn btn-sm btn-outline-secondary float-end" onclick="resetFilters()">
+                            <i class="bi bi-arrow-clockwise"></i> Limpar Filtros
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0">Produtos com Estoque Baixo</h5>
+                            <span class="badge bg-warning" id="lowStockCount">0</span>
+                        </div>
+                        <div id="lowStockProducts">
+                            <!-- Produtos com estoque baixo -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0">Todos os Produtos</h5>
+                            <span class="badge bg-primary" id="totalProductsCount">0</span>
+                        </div>
+                        <div id="allStockProducts">
+                            <!-- Todos os produtos -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Resumo do Estoque</h5>
+                        <div id="stockSummary">
+                            <!-- Resumo será carregado aqui -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-body text-center">
+                        <button class="btn btn-outline-danger w-100" onclick="auth.logout()">
+                            <i class="bi bi-box-arrow-right"></i> Sair do Sistema
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+<script src="/js/estoque.js"></script>
+</body>
+</html>
