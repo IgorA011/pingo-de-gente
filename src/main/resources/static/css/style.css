@@ -1,0 +1,236 @@
+:root {
+    --primary-color: #ff85a2;
+    --secondary-color: #85d3ff;
+    --light-color: #fff5f7;
+    --dark-color: #333;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: var(--primary-color) !important;
+}
+
+.hero-section {
+    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23ff85a2" opacity="0.2"/><circle cx="30" cy="30" r="15" fill="%2385d3ff" opacity="0.3"/><circle cx="70" cy="70" r="20" fill="%23ff85a2" opacity="0.3"/></svg>');
+    background-size: cover;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.product-card {
+    transition: transform 0.3s;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    height: 100%;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.product-image {
+    height: 200px;
+    object-fit: cover;
+}
+
+.price-tag {
+    font-weight: bold;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.btn-primary-custom {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary-custom:hover {
+    background-color: #ff6b95;
+    border-color: #ff6b95;
+    color: white;
+}
+
+.btn-secondary-custom {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: white;
+}
+
+.btn-secondary-custom:hover {
+    background-color: #6bc1ff;
+    border-color: #6bc1ff;
+    color: white;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-item {
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+}
+
+.footer {
+    background-color: var(--light-color);
+    padding: 30px 0;
+    margin-top: 50px;
+}
+
+.stock-low {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.admin-panel {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.order-status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.status-em-processamento {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-enviado {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-finalizado {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.category-card {
+    transition: transform 0.3s;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+}
+/* LOGO PERSONALIZADO - AUMENTADA */
+.navbar-brand {
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.navbar-brand img {
+    height: 180px !important; /* Aumentei de 150px para 180px */
+    width: auto !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Ajuste para mobile */
+@media (max-width: 768px) {
+    .navbar-brand img {
+        height: 80px !important; /* Aumentei de 50px para 80px no mobile */
+    }
+}
+
+/* Garantir que outros elementos da navbar se ajustem */
+.navbar-nav {
+    align-items: center !important;
+}
+
+/* LOGO PERSONALIZADO - AUMENTADA MAS CONTROLADA */
+.navbar {
+    min-height: 100px; /* Define uma altura fixa para a navbar */
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.navbar-brand {
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    height: 100px; /* Altura igual à navbar */
+}
+
+.navbar-brand img {
+    height: 150px !important; /* Logo um pouco menor que a navbar */
+    width: auto !important;
+    max-height: 200px !important; /* Limite máximo */
+    object-fit: contain;
+}
+
+/* Ajuste para mobile */
+@media (max-width: 768px) {
+    .navbar {
+        min-height: 80px; /* Altura menor no mobile */
+    }
+
+    .navbar-brand {
+        height: 80px;
+    }
+
+    .navbar-brand img {
+        height: 150px !important;
+        max-height: 60px !important;
+    }
+}
+
+/* Garantir que outros elementos se alinhem */
+.navbar-nav {
+    align-items: center !important;
+}
+
+.navbar-collapse {
+    align-items: center;
+}

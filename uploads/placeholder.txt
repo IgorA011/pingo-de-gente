@@ -1,0 +1,1 @@
+Use a real image when uploading via /produtos

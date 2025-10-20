@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil - Pingo de Gente</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .profile-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        .avatar-lg {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(255,255,255,0.2);
+            border: 3px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+        }
+        .card-hover {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .nav-pills .nav-link.active {
+            background-color: #667eea;
+            border-color: #667eea;
+        }
+        .form-section {
+            border-left: 4px solid #667eea;
+            padding-left: 1rem;
+            margin-bottom: 2rem;
+        }
+        .password-strength {
+            height: 5px;
+            border-radius: 3px;
+            margin-top: 5px;
+            transition: all 0.3s ease;
+        }
+        .strength-weak { background-color: #dc3545; width: 25%; }
+        .strength-medium { background-color: #ffc107; width: 50%; }
+        .strength-strong { background-color: #198754; width: 75%; }
+        .strength-very-strong { background-color: #198754; width: 100%; }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <img src="img/pingo.png 1.png" alt="Logo Loja Infantil" style="height: 200px; max-width: 100%; margin: 0 auto;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Início</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="produtos.html">Produtos</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item me-2">
+                    <a class="nav-link position-relative" href="carrinho.html">
+                        <i class="bi bi-cart3"></i>
+                        <span class="cart-badge d-none">0</span>
+                    </a>
+                </li>
+                <li class="nav-item dropdown" id="userMenu" style="display: none;">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                        <div class="user-avatar d-inline-flex me-1">U</div>
+                        <span id="userName">Usuário</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="perfil.html"><i class="bi bi-person"></i> Meu Perfil</a></li>
+                        <li><a class="dropdown-item" href="pedidos.html"><i class="bi bi-bag"></i> Meus Pedidos</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="bi bi-box-arrow-right"></i> Sair</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item" id="loginMenu">
+                    <a class="btn btn-primary-custom" href="login.html">Entrar</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Header -->
+<div class="profile-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <div class="avatar-lg" id="profileAvatar">U</div>
+            </div>
+            <div class="col">
+                <h1>Editar Perfil</h1>
+                <p class="mb-0">Gerencie suas informações pessoais, endereço e segurança</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Conteúdo Principal -->
+<div class="container">
+    <div class="row">
+        <!-- Menu Lateral -->
+        <div class="col-md-3 mb-4">
+            <div class="card card-hover">
+                <div class="card-body">
+                    <h5 class="card-title">Configurações</h5>
+                    <div class="nav flex-column nav-pills" id="settingsTabs" role="tablist">
+                        <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#personal" type="button">
+                            <i class="bi bi-person"></i> Dados Pessoais
+                        </button>
+                        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#address" type="button">
+                            <i class="bi bi-geo-alt"></i> Meu Endereço
+                        </button>
+                        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#password" type="button">
+                            <i class="bi bi-shield-lock"></i> Alterar Senha
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-hover mt-3">
+                <div class="card-body text-center">
+                    <a href="perfil.html" class="btn btn-outline-secondary w-100 mb-2">
+                        <i class="bi bi-arrow-left"></i> Voltar ao Perfil
+                    </a>
+                    <button class="btn btn-outline-danger w-100" onclick="cancelarEdicao()">
+                        <i class="bi bi-x-circle"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulários -->
+        <div class="col-md-9">
+            <div class="tab-content" id="settingsTabContent">
+
+                <!-- Aba: Dados Pessoais -->
+                <div class="tab-pane fade show active" id="personal">
+                    <div class="card card-hover">
+                        <div class="card-header">
+                            <h4 class="mb-0"><i class="bi bi-person"></i> Dados Pessoais</h4>
+                        </div>
+                        <div class="card-body">
+                            <form id="personalForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="nome" class="form-label">Nome Completo *</label>
+                                        <input type="text" class="form-control" id="nome" name="nome" required>
+                                        <div class="form-text">Seu nome completo como aparece nos documentos</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="email" class="form-label">E-mail *</label>
+                                        <input type="email" class="form-control" id="email" name="email" required>
+                                        <div class="form-text">Seu endereço de e-mail para contato</div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="telefone" class="form-label">Telefone</label>
+                                        <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="(11) 99999-9999">
+                                        <div class="form-text">Telefone para contato e entregas</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Perfil</label>
+                                        <input type="text" class="form-control" id="perfil" readonly disabled>
+                                        <div class="form-text">Seu tipo de perfil no sistema</div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4">
+                                    <button type="submit" class="btn btn-primary-custom">
+                                        <i class="bi bi-check-lg"></i> Salvar Dados Pessoais
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aba: Endereço -->
+                <div class="tab-pane fade" id="address">
+                    <div class="card card-hover">
+                        <div class="card-header">
+                            <h4 class="mb-0"><i class="bi bi-geo-alt"></i> Meu Endereço</h4>
+                        </div>
+                        <div class="card-body">
+                            <form id="addressForm">
+                                <div class="row">
+                                    <div class="col-md-8 mb-3">
+                                        <label for="rua" class="form-label">Rua *</label>
+                                        <input type="text" class="form-control" id="rua" name="rua" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="numero" class="form-label">Número *</label>
+                                        <input type="text" class="form-control" id="numero" name="numero" required>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="bairro" class="form-label">Bairro *</label>
+                                        <input type="text" class="form-control" id="bairro" name="bairro" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="cidade" class="form-label">Cidade *</label>
+                                        <input type="text" class="form-control" id="cidade" name="cidade" required>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="cep" class="form-label">CEP *</label>
+                                    <input type="text" class="form-control" id="cep" name="cep" required placeholder="00000-000">
+                                    <div class="form-text">Digite o CEP para autocompletar o endereço</div>
+                                </div>
+
+                                <div class="mt-4">
+                                    <button type="submit" class="btn btn-primary-custom">
+                                        <i class="bi bi-check-lg"></i> Salvar Endereço
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aba: Alterar Senha -->
+                <div class="tab-pane fade" id="password">
+                    <div class="card card-hover">
+                        <div class="card-header">
+                            <h4 class="mb-0"><i class="bi bi-shield-lock"></i> Alterar Senha</h4>
+                        </div>
+                        <div class="card-body">
+                            <form id="passwordForm">
+                                <div class="mb-3">
+                                    <label for="senhaAtual" class="form-label">Senha Atual *</label>
+                                    <input type="password" class="form-control" id="senhaAtual" name="senhaAtual" required>
+                                    <div class="form-text">Digite sua senha atual para confirmar a alteração</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="novaSenha" class="form-label">Nova Senha *</label>
+                                    <input type="password" class="form-control" id="novaSenha" name="novaSenha" required
+                                           minlength="6" oninput="verificarForcaSenha(this.value)">
+                                    <div class="form-text">Mínimo de 6 caracteres</div>
+                                    <div class="password-strength" id="passwordStrength"></div>
+                                    <small id="passwordFeedback" class="form-text"></small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="confirmarSenha" class="form-label">Confirmar Nova Senha *</label>
+                                    <input type="password" class="form-control" id="confirmarSenha" name="confirmarSenha" required>
+                                    <div class="form-text">Digite a nova senha novamente para confirmar</div>
+                                </div>
+
+                                <div class="alert alert-info">
+                                    <h6><i class="bi bi-lightbulb"></i> Dicas para uma senha segura:</h6>
+                                    <ul class="mb-0">
+                                        <li>Use pelo menos 6 caracteres</li>
+                                        <li>Combine letras maiúsculas e minúsculas</li>
+                                        <li>Inclua números e símbolos especiais</li>
+                                        <li>Evite senhas óbvias como "123456"</li>
+                                    </ul>
+                                </div>
+
+                                <div class="mt-4">
+                                    <button type="submit" class="btn btn-primary-custom">
+                                        <i class="bi bi-key"></i> Alterar Senha
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Loja Infantil</h5>
+                <p>Especializada em roupas e acessórios infantis de qualidade.</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Links Rápidos</h5>
+                <ul class="list-unstyled">
+                    <li><a href="index.html" class="text-decoration-none text-dark">Início</a></li>
+                    <li><a href="produtos.html" class="text-decoration-none text-dark">Produtos</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Contato</h5>
+                <p><i class="bi bi-geo-alt"></i> Piraporinha, Zona Sul - São Paulo, SP - CEP 05835-000 </p>
+                <p><i class="bi bi-envelope"></i>igoralves@pingodegente.com</p>
+            </div>
+        </div>
+        <hr>
+        <div class="text-center">
+            <p>© 2025 Pingo de Gente. Todos os direitos reservados.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+<script src="js/perfil.js"></script>
+</body>
+</html>

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - Pingo de Gente</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .stats-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .stats-card .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .stats-card .label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        .admin-nav {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .action-btn {
+            transition: all 0.3s ease;
+        }
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .user-badge {
+            font-size: 0.8rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+        .badge-admin {
+            background: #dc3545;
+            color: white;
+        }
+        .badge-estoquista {
+            background: #fd7e14;
+            color: white;
+        }
+        .badge-user {
+            background: #6c757d;
+            color: white;
+        }
+        .product-image-admin {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .low-stock {
+            background-color: #fff3cd !important;
+            border-left: 4px solid #ffc107;
+        }
+        .out-of-stock {
+            background-color: #f8d7da !important;
+            border-left: 4px solid #dc3545;
+        }
+        .admin-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            border-radius: 0 0 20px 20px;
+        }
+        .image-preview {
+            max-width: 200px;
+            max-height: 200px;
+            margin-top: 10px;
+            border-radius: 8px;
+            display: none;
+        }
+        .current-image {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        .order-status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .status-em-processamento {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        .status-enviado {
+            background-color: #cce7ff;
+            color: #004085;
+            border: 1px solid #b3d7ff;
+        }
+        .status-finalizado {
+            background-color: #d1f2eb;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status-cancelado {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .user-avatar-sm {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+        .stock-low {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .price-tag {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .order-card {
+            transition: all 0.3s ease;
+        }
+        .order-card:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+<!-- Header Admin -->
+<div class="admin-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h1><i class="bi bi-speedometer2"></i>Backoffice</h1>
+            </div>
+            <div class="col-md-6 text-end">
+                <div class="dropdown">
+                    <a class="btn btn-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <div class="user-avatar d-inline-flex me-1">A</div>
+                        <span id="userName">Admin</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" id="logoutBtn">
+                            <i class="bi bi-box-arrow-right"></i> Sair
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <!-- Acesso Negado -->
+    <div id="accessDenied" class="alert alert-danger text-center" style="display: none;">
+        <h4><i class="bi bi-shield-exclamation"></i> Acesso Restrito</h4>
+        <p>Esta área é exclusiva para administradores.</p>
+        <a href="index.html" class="btn btn-primary">Voltar para a Loja</a>
+    </div>
+
+    <!-- Conteúdo Admin -->
+    <div id="adminContent" style="display: none;">
+        <!-- Navegação Rápida -->
+        <div class="admin-nav">
+            <div class="row g-2">
+                <div class="col-md-3">
+                    <button class="btn btn-primary-custom w-100 action-btn" onclick="showTab('dashboard')">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-outline-primary w-100 action-btn" onclick="showTab('products')">
+                        <i class="bi bi-box-seam"></i> Produtos
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-outline-primary w-100 action-btn" onclick="showTab('orders')">
+                        <i class="bi bi-receipt"></i> Pedidos
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-outline-primary w-100 action-btn" onclick="showTab('users')">
+                        <i class="bi bi-people"></i> Usuários
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboardTab" class="tab-content">
+            <div class="row">
+                <!-- Estatísticas -->
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="number" id="totalUsers">0</div>
+                        <div class="label">Total de Usuários</div>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <div class="number" id="totalProducts">0</div>
+                        <div class="label">Produtos Cadastrados</div>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <div class="number" id="totalOrders">0</div>
+                        <div class="label">Total de Pedidos</div>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <div class="number" id="pendingOrders">0</div>
+                        <div class="label">Pedidos Pendentes</div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ações Rápidas -->
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-lightning"></i> Ações Rápidas
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary-custom action-btn" data-bs-toggle="modal" data-bs-target="#productModal">
+                                    <i class="bi bi-plus-circle"></i> Adicionar Novo Produto
+                                </button>
+                                <button class="btn btn-outline-primary action-btn" onclick="loadLowStock()">
+                                    <i class="bi bi-exclamation-triangle"></i> Ver Estoque Baixo
+                                </button>
+                                <button class="btn btn-outline-primary action-btn" onclick="showTab('orders')">
+                                    <i class="bi bi-list-check"></i> Gerenciar Pedidos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-graph-up"></i> Estatísticas Rápidas
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="quickStats">
+                                <p><i class="bi bi-box text-warning"></i> <strong id="lowStockCount">0</strong> produtos com estoque baixo</p>
+                                <p><i class="bi bi-cart-check text-success"></i> <strong id="completedOrders">0</strong> pedidos finalizados hoje</p>
+                                <p><i class="bi bi-currency-dollar text-primary"></i> Faturamento total: R$ <strong id="totalRevenue">0,00</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gestão de Produtos -->
+        <div id="productsTab" class="tab-content" style="display: none;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4><i class="bi bi-box-seam"></i> Gestão de Produtos</h4>
+                <button class="btn btn-primary-custom" data-bs-toggle="modal" data-bs-target="#productModal">
+                    <i class="bi bi-plus-circle"></i> Novo Produto
+                </button>
+            </div>
+
+
+            <!-- Lista de Produtos -->
+            <div class="card">
+                <div class="card-body">
+                    <div id="adminProductsList">
+                        <div class="text-center py-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Carregando...</span>
+                            </div>
+                            <p class="mt-2">Carregando produtos...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gestão de Pedidos -->
+        <div id="ordersTab" class="tab-content" style="display: none;">
+            <h4 class="mb-4"><i class="bi bi-receipt"></i> Gestão de Pedidos</h4>
+
+            <div class="card">
+                <div class="card-body">
+                    <div id="adminOrdersList">
+                        <div class="text-center py-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Carregando...</span>
+                            </div>
+                            <p class="mt-2">Carregando pedidos...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gestão de Usuários -->
+        <div id="usersTab" class="tab-content" style="display: none;">
+            <h4 class="mb-4"><i class="bi bi-people"></i> Gestão de Usuários</h4>
+
+            <div class="card">
+                <div class="card-body">
+                    <div id="adminUsersList">
+                        <div class="text-center py-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Carregando...</span>
+                            </div>
+                            <p class="mt-2">Carregando usuários...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Produto -->
+<div class="modal fade" id="productModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Novo Produto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="productForm" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="productName" class="form-label">Nome do Produto *</label>
+                                <input type="text" class="form-control" id="productName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="productDescription" class="form-label">Descrição *</label>
+                                <textarea class="form-control" id="productDescription" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="productPrice" class="form-label">Preço *</label>
+                                <input type="number" class="form-control" id="productPrice" step="0.01" min="0" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="productCategory" class="form-label">Categoria *</label>
+                                <select class="form-control" id="productCategory" required>
+                                    <option value="">Selecione...</option>
+                                    <option value="Roupas">Roupas</option>
+                                    <option value="Acessórios">Acessórios</option>
+                                    <option value="Brinquedos">Brinquedos</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="productQuantity" class="form-label">Quantidade em Estoque *</label>
+                                <input type="number" class="form-control" id="productQuantity" min="0" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="productImage" class="form-label">Imagem do Produto *</label>
+                                <input type="file" class="form-control" id="productImage" accept="image/*" required>
+                                <small class="text-muted">Formatos: JPG, PNG, GIF. Máx: 2MB</small>
+                                <img id="imagePreview" class="image-preview mt-2" alt="Preview da imagem">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary-custom">
+                        <i class="bi bi-check-circle"></i> Salvar Produto
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Edição de Produto -->
+<div class="modal fade" id="editProductModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Produto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="editProductForm" enctype="multipart/form-data">
+                <input type="hidden" id="editProductId">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editProductName" class="form-label">Nome do Produto *</label>
+                                <input type="text" class="form-control" id="editProductName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editProductDescription" class="form-label">Descrição *</label>
+                                <textarea class="form-control" id="editProductDescription" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editProductPrice" class="form-label">Preço *</label>
+                                <input type="number" class="form-control" id="editProductPrice" step="0.01" min="0" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editProductCategory" class="form-label">Categoria *</label>
+                                <select class="form-control" id="editProductCategory" required>
+                                    <option value="Roupas">Roupas</option>
+                                    <option value="Acessórios">Acessórios</option>
+                                    <option value="Brinquedos">Brinquedos</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editProductQuantity" class="form-label">Quantidade em Estoque *</label>
+                                <input type="number" class="form-control" id="editProductQuantity" min="0" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editProductImage" class="form-label">Nova Imagem do Produto</label>
+                                <input type="file" class="form-control" id="editProductImage" accept="image/*">
+                                <small class="text-muted">Deixe em branco para manter a imagem atual</small>
+                                <div id="currentImageContainer" class="mt-2">
+                                    <strong>Imagem Atual:</strong>
+                                    <img id="currentImagePreview" class="current-image" alt="Imagem atual do produto">
+                                </div>
+                                <img id="editImagePreview" class="image-preview mt-2" alt="Preview da nova imagem">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary-custom">
+                        <i class="bi bi-check-circle"></i> Atualizar Produto
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/admin.js"></script>
+
+</body>
+</html>
