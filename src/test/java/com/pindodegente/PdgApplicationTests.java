@@ -1,4 +1,4 @@
-package com.pindodegente.pdg;
+package com.pindodegente;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
