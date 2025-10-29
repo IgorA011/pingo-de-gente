@@ -7,20 +7,146 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f9f9f9;
+    background-color: #ffffff;
+    position: relative;
+    overflow-x: hidden;
 }
 
+/* Bolinhas coloridas flutuantes */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(circle at 20% 30%, #ff9ec9 0%, transparent 8%),
+        radial-gradient(circle at 80% 20%, #9ec9ff 0%, transparent 7%),
+        radial-gradient(circle at 40% 70%, #9effc9 0%, transparent 9%),
+        radial-gradient(circle at 70% 80%, #ffd79e 0%, transparent 6%),
+        radial-gradient(circle at 10% 50%, #d79eff 0%, transparent 8%),
+        radial-gradient(circle at 90% 60%, #9efff9 0%, transparent 5%);
+    z-index: -1;
+    animation: floatBubbles 8s ease-in-out infinite;
+}
+
+/* Animação das bolinhas */
+@keyframes floatBubbles {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.7;
+    }
+    25% {
+        transform: translateY(-10px) scale(1.05);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateY(5px) scale(0.95);
+        opacity: 0.6;
+    }
+    75% {
+        transform: translateY(-5px) scale(1.02);
+        opacity: 0.9;
+    }
+}
+
+/* Estrelinhas piscantes */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(circle at 15% 25%, #ff6b6b 0%, transparent 3%),
+        radial-gradient(circle at 85% 35%, #4ecdc4 0%, transparent 2%),
+        radial-gradient(circle at 35% 85%, #ffe66d 0%, transparent 4%),
+        radial-gradient(circle at 75% 15%, #ff9ec9 0%, transparent 3%),
+        radial-gradient(circle at 55% 65%, #9ec9ff 0%, transparent 2%);
+    z-index: -1;
+    animation: twinkle 3s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+/* Animação adicional de nuvens suaves */
+.clouds {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    animation: drift 15s linear infinite;
+}
+
+.cloud:nth-child(1) {
+    width: 100px;
+    height: 40px;
+    top: 15%;
+    left: -100px;
+    animation-delay: 0s;
+}
+
+.cloud:nth-child(2) {
+    width: 150px;
+    height: 50px;
+    top: 35%;
+    left: -150px;
+    animation-delay: 3s;
+}
+
+.cloud:nth-child(3) {
+    width: 120px;
+    height: 45px;
+    top: 65%;
+    left: -120px;
+    animation-delay: 6s;
+}
+
+@keyframes drift {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(100vw + 200px));
+    }
+}
 .navbar-brand {
     font-weight: bold;
     color: var(--primary-color) !important;
 }
 
 .hero-section {
-    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)),
-                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23ff85a2" opacity="0.2"/><circle cx="30" cy="30" r="15" fill="%2385d3ff" opacity="0.3"/><circle cx="70" cy="70" r="20" fill="%23ff85a2" opacity="0.3"/></svg>');
-    background-size: cover;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #ffffff 100%);
     padding: 80px 0;
     text-align: center;
+    position: relative;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--primary-color));
 }
 
 .product-card {
@@ -92,9 +218,24 @@ body {
 }
 
 .footer {
-    background-color: var(--light-color);
+    background-color: #000000;
     padding: 30px 0;
     margin-top: 50px;
+    border-top: 8px solid;
+    border-image: linear-gradient(90deg,
+        #ff6b6b,
+        #4ecdc4,
+        #ffe66d,
+        #ff9ec9,
+        #9ec9ff,
+        #9effc9
+    ) 1;
+    border-image-slice: 1;
+}
+
+.footer,
+.footer * {
+    color: #ffffff !important;
 }
 
 .stock-low {
