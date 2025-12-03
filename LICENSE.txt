@@ -1,0 +1,16 @@
+Copyright (c) 2025 Igor Alves de Oliveira
+
+Todos os direitos reservados.
+
+Este código-fonte é disponibilizado apenas para visualização.  
+É estritamente proibido:
+
+- Copiar total ou parcialmente este código;
+- Reutilizar ou incorporar este código em outros projetos;
+- Modificar, adaptar ou criar trabalhos derivados;
+- Distribuir ou compartilhar este código, em qualquer forma;
+- Utilizar este código para fins comerciais, acadêmicos ou pessoais.
+
+O uso deste código, em qualquer nível, só é permitido mediante autorização por escrito do proprietário.
+
+Qualquer violação desta licença poderá resultar em medidas legais.
